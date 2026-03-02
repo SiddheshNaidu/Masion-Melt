@@ -1,0 +1,58 @@
+import { Review } from '@/lib/types';
+
+export const reviews: Review[] = [
+  {
+    id: 'r1',
+    author: 'Priya M.',
+    rating: 5,
+    date: '2026-02-15',
+    title: 'Finally, a perfume that fits in my pocket!',
+    body: 'Forest Whisper is incredible. The woody scent lasts all day and I love that I can just toss it in my jeans pocket. No more bulky bottles in my bag.',
+    verified: true,
+  },
+  {
+    id: 'r2',
+    author: 'Arjun K.',
+    rating: 5,
+    date: '2026-02-10',
+    title: 'Travel game changer',
+    body: 'Took Tidal Mist on my last flight — no TSA hassles at all. Fresh ocean scent that actually lasts. Already ordering Black Muse next.',
+    verified: true,
+  },
+  {
+    id: 'r3',
+    author: 'Sanya R.',
+    rating: 4,
+    date: '2026-02-08',
+    title: 'Vanilla Veil is addictive',
+    body: 'The vanilla is so creamy and warm without being overpowering. People keep asking what I\'m wearing. Only wish the tin was a touch bigger.',
+    verified: true,
+  },
+  {
+    id: 'r4',
+    author: 'Rohan D.',
+    rating: 5,
+    date: '2026-01-28',
+    title: 'Black Muse is THAT scent',
+    body: 'Dark, mysterious, and so sophisticated. The oud and rose combination is chef\'s kiss. The slider compact feels super premium too.',
+    verified: true,
+  },
+  {
+    id: 'r5',
+    author: 'Meera S.',
+    rating: 4,
+    date: '2026-01-20',
+    title: 'Perfect gift idea',
+    body: 'Bought Blossom Aura for my sister\'s birthday. The packaging is gorgeous and the floral scent is so fresh and feminine. She absolutely loved it.',
+    verified: false,
+  },
+  {
+    id: 'r6',
+    author: 'Karan T.',
+    rating: 5,
+    date: '2026-01-15',
+    title: 'Clean ingredients, real luxury',
+    body: 'As someone with sensitive skin, I appreciate the clean formula. Forest Whisper doesn\'t irritate at all and the scent projection is surprisingly good for a solid perfume.',
+    verified: true,
+  },
+];

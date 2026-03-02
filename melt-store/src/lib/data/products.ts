@@ -1,0 +1,123 @@
+import { Product } from '@/lib/types';
+
+export const products: Product[] = [
+  {
+    id: '1',
+    name: 'Forest Whisper',
+    slug: 'forest-whisper',
+    description: 'A deep, grounding blend of misty pine forests and damp earth after rain. Forest Whisper captures the quiet majesty of old-growth woodlands — cedar bark, crushed fern, and a whisper of wild moss.',
+    scentFamily: 'Woody',
+    format: 'Pocket Tin',
+    topNotes: ['Bergamot', 'Pine Needle', 'Green Cardamom'],
+    heartNotes: ['Cedarwood', 'Fern', 'Wild Sage'],
+    baseNotes: ['Vetiver', 'Oakmoss', 'Musk'],
+    price: 399,
+    images: [
+      '/images/forest-whisper-1.jpg',
+      '/images/forest-whisper-2.jpg',
+      '/images/forest-whisper-3.jpg',
+      '/images/forest-whisper-4.jpg',
+    ],
+    badge: 'BESTSELLER',
+    size: '5g',
+    ingredients: 'Beeswax, Fractionated Coconut Oil, Shea Butter, Vitamin E, Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
+    howToUse: 'Warm the balm with your fingertip for 2–3 seconds. Glide across pulse points — wrists, behind ears, neck, and inner elbows. Your body heat will melt the fragrance and release it slowly throughout the day. Reapply as desired.',
+  },
+  {
+    id: '2',
+    name: 'Vanilla Veil',
+    slug: 'vanilla-veil',
+    description: 'A warm, enveloping embrace of Madagascar vanilla, soft tonka bean, and golden amber. Vanilla Veil is comfort bottled — intimate, creamy, and utterly addictive.',
+    scentFamily: 'Floral',
+    format: 'Pocket Tin',
+    topNotes: ['Almond Blossom', 'Bergamot', 'Pink Pepper'],
+    heartNotes: ['Madagascar Vanilla', 'Jasmine Sambac', 'Tonka Bean'],
+    baseNotes: ['Amber', 'Sandalwood', 'Caramel Musk'],
+    price: 399,
+    images: [
+      '/images/vanilla-veil-1.jpg',
+      '/images/vanilla-veil-2.jpg',
+      '/images/vanilla-veil-3.jpg',
+      '/images/vanilla-veil-4.jpg',
+    ],
+    badge: 'BESTSELLER',
+    size: '5g',
+    ingredients: 'Beeswax, Fractionated Coconut Oil, Shea Butter, Vitamin E, Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
+    howToUse: 'Warm the balm with your fingertip for 2–3 seconds. Glide across pulse points — wrists, behind ears, neck, and inner elbows. Your body heat will melt the fragrance and release it slowly throughout the day. Reapply as desired.',
+  },
+  {
+    id: '3',
+    name: 'Black Muse',
+    slug: 'black-muse',
+    description: 'Dark, seductive, and unapologetically bold. Black Muse weaves together midnight rose, smoky oud, and black cherry for a fragrance that lingers like a memory you can\'t shake.',
+    scentFamily: 'Dark & Smoky',
+    format: 'Signature Slider',
+    topNotes: ['Black Cherry', 'Saffron', 'Dark Plum'],
+    heartNotes: ['Turkish Rose', 'Oud', 'Black Violet'],
+    baseNotes: ['Smoky Incense', 'Leather', 'Dark Amber'],
+    price: 799,
+    comparePrice: 999,
+    images: [
+      '/images/black-muse-1.jpg',
+      '/images/black-muse-2.jpg',
+      '/images/black-muse-3.jpg',
+      '/images/black-muse-4.jpg',
+    ],
+    badge: 'LIMITED',
+    size: '10g',
+    ingredients: 'Carnauba Wax, Fractionated Coconut Oil, Jojoba Oil, Vitamin E, Premium Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
+    howToUse: 'Slide open the compact. Warm the balm with your fingertip for 2–3 seconds. Apply to pulse points — wrists, behind ears, neck, and inner elbows. The body heat-activated formula will release fragrance slowly. Reapply as desired.',
+  },
+  {
+    id: '4',
+    name: 'Tidal Mist',
+    slug: 'tidal-mist',
+    description: 'The scent of ocean air on sun-warmed skin. Tidal Mist blends sea salt, driftwood, and white tea into a breeze-like fragrance that feels clean, energising, and effortlessly fresh.',
+    scentFamily: 'Fresh',
+    format: 'Balm Stick',
+    topNotes: ['Sea Salt', 'Lemon Zest', 'Eucalyptus'],
+    heartNotes: ['White Tea', 'Water Lily', 'Blue Lotus'],
+    baseNotes: ['Driftwood', 'White Musk', 'Ambergris'],
+    price: 449,
+    images: [
+      '/images/tidal-mist-1.jpg',
+      '/images/tidal-mist-2.jpg',
+      '/images/tidal-mist-3.jpg',
+      '/images/tidal-mist-4.jpg',
+    ],
+    badge: 'NEW',
+    size: '8g',
+    ingredients: 'Beeswax, Fractionated Coconut Oil, Shea Butter, Vitamin E, Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
+    howToUse: 'Twist up the balm stick. Glide directly across pulse points — wrists, behind ears, neck, and inner elbows. Your body heat will activate the fragrance. No fingers needed. Reapply as desired.',
+  },
+  {
+    id: '5',
+    name: 'Blossom Aura',
+    slug: 'blossom-aura',
+    description: 'A radiant bouquet of spring in your pocket. Blossom Aura layers dewy peony, white gardenia, and sun-ripened peach into a fragrance that feels like the first warm day of the year.',
+    scentFamily: 'Floral',
+    format: 'Pocket Tin',
+    topNotes: ['Peach Nectar', 'Pink Grapefruit', 'Lychee'],
+    heartNotes: ['Peony', 'White Gardenia', 'Lily of the Valley'],
+    baseNotes: ['White Cedar', 'Soft Musk', 'Powdered Iris'],
+    price: 349,
+    images: [
+      '/images/blossom-aura-1.jpg',
+      '/images/blossom-aura-2.jpg',
+      '/images/blossom-aura-3.jpg',
+      '/images/blossom-aura-4.jpg',
+    ],
+    size: '5g',
+    ingredients: 'Beeswax, Fractionated Coconut Oil, Shea Butter, Vitamin E, Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
+    howToUse: 'Warm the balm with your fingertip for 2–3 seconds. Glide across pulse points — wrists, behind ears, neck, and inner elbows. Your body heat will melt the fragrance and release it slowly throughout the day. Reapply as desired.',
+  },
+];
+
+export function getProductBySlug(slug: string): Product | undefined {
+  return products.find((p) => p.slug === slug);
+}
+
+export function getProductsByFamily(family: string): Product[] {
+  if (family === 'ALL') return products;
+  return products.filter((p) => p.scentFamily === family);
+}
