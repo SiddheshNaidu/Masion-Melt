@@ -7,10 +7,13 @@ export default function AnnouncementBar() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    const dismissed = localStorage.getItem('melt-announcement-dismissed');
-    if (!dismissed) {
-      setIsVisible(true);
-    }
+    let timeoutId = setTimeout(() => {
+      const dismissed = localStorage.getItem('melt-announcement-dismissed');
+      if (!dismissed) {
+        setIsVisible(true);
+      }
+    }, 0);
+    return () => clearTimeout(timeoutId);
   }, []);
 
   const handleDismiss = () => {

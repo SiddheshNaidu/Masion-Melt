@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
-import { ArrowRight } from 'lucide-react';
+import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowRight, Star, ShieldCheck, Zap } from 'lucide-react';
+
 import ProductGrid from '@/components/products/ProductGrid';
 import { products, getProductsByFamily } from '@/lib/data/products';
 
@@ -29,13 +31,26 @@ export default function HomePage() {
   const featuredProducts = products.filter((p) => p.badge === 'BESTSELLER' || p.badge === 'LIMITED').slice(0, 3);
   const filteredProducts = activeTab === 'ALL' ? products : getProductsByFamily(activeTab);
 
+
   return (
     <>
       {/* ─── HERO ─────────────────────────────────────────────────── */}
       <section className="relative h-[100vh] min-h-[600px] flex items-center overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0 bg-gradient-to-br from-[#2a1f14] via-[#3d2e1f] to-[#1a1510]" />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(200,169,126,0.15),transparent_60%)]" />
+        <div className="absolute inset-0 opacity-10 mix-blend-overlay">
+          <Image
+            src="/images/brand-logo.png"
+            alt=""
+            fill
+            priority
+            className="object-cover object-center"
+          />
+        </div>
+        <div className="absolute inset-0 justify-center items-center flex pointer-events-none opacity-5">
+             <Image src="/images/product5.png" alt="" width={600} height={600} className="blur-[1px] scale-150 rotate-12" />
+        </div>
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(200,169,126,0.3),transparent_60%)]" />
 
         {/* Content */}
         <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-10 w-full">
@@ -56,33 +71,47 @@ export default function HomePage() {
             <motion.p variants={fadeUp} className="mt-5 text-[15px] sm:text-[17px] text-white/60 leading-relaxed max-w-[440px]">
               Pocket-sized solid perfumes that melt into your skin wherever the day takes you.
             </motion.p>
-            <motion.div variants={fadeUp} className="mt-8">
-              <Link
-                href="/shop"
-                className="inline-block bg-white text-melt-text text-[12px] sm:text-[13px] font-medium uppercase tracking-[0.08em] px-8 sm:px-10 py-3.5 sm:py-4 rounded-lg hover:bg-melt-accent hover:text-melt-text transition-colors duration-200 active:animate-micro-bounce"
-              >
-                Shop MELT
+            <motion.div 
+              variants={fadeUp} 
+              className="mt-10"
+            >
+              <Link href="/shop">
+                <div
+                  className="inline-flex items-center gap-3 bg-white text-melt-text text-[13px] font-bold uppercase tracking-widest px-10 py-5 rounded-full hover:bg-melt-accent hover:text-white transition-all duration-300 shadow-2xl relative group active:scale-95"
+                >
+                  <span className="relative z-10">Explore the Scent</span>
+                  <div className="w-8 h-8 rounded-full bg-melt-accent/10 flex items-center justify-center group-hover:bg-white/20 transition-colors">
+                    <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </div>
               </Link>
             </motion.div>
+
           </motion.div>
         </div>
       </section>
 
-      {/* ─── MARQUEE TICKER ───────────────────────────────────────── */}
-      <section className="bg-melt-bg-alt border-y border-melt-border py-3.5 overflow-hidden">
-        <div className="flex animate-marquee whitespace-nowrap">
-          {[...Array(2)].map((_, i) => (
-            <div key={i} className="flex items-center gap-8 mr-8">
-              {['POCKET-SIZED', 'NO SPILLS', 'TRAVEL-READY', 'SKIN-SAFE', 'LONG-LASTING', 'SOLID FORMAT'].map((text) => (
-                <span key={text} className="text-[13px] font-medium uppercase tracking-[0.1em] text-melt-text flex items-center gap-8">
-                  {text}
-                  <span className="text-melt-accent text-lg">·</span>
-                </span>
-              ))}
-            </div>
-          ))}
+      <section className="bg-melt-bg-alt border-y border-melt-border py-4 overflow-hidden relative">
+        <div className="flex whitespace-nowrap">
+          <motion.div 
+            className="flex items-center gap-12 px-6"
+            animate={{ x: [0, -1000] }}
+            transition={{ repeat: Infinity, duration: 30, ease: "linear" }}
+          >
+            {[...Array(12)].map((_, i) => (
+              <div key={i} className="flex items-center gap-12">
+                {['Travel-Ready', 'Spill-Proof', 'Skin-Safe', 'Vegan'].map((text) => (
+                  <span key={text} className="text-[14px] font-bold uppercase tracking-[0.2em] text-melt-text/40 flex items-center gap-12 italic">
+                    {text}
+                    <span className="w-1.5 h-1.5 rounded-full bg-melt-accent" />
+                  </span>
+                ))}
+              </div>
+            ))}
+          </motion.div>
         </div>
       </section>
+
 
       {/* ─── FEATURED PRODUCTS ────────────────────────────────────── */}
       <section className="py-20 lg:py-24">
@@ -119,16 +148,39 @@ export default function HomePage() {
             variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
           >
             {[
-              { emoji: '🫰', title: 'Swipe', desc: 'Glide the balm across your pulse points.' },
-              { emoji: '🌡️', title: 'Melt', desc: 'Your body heat activates the fragrance.' },
-              { emoji: '✨', title: 'Linger', desc: 'Long-lasting scent that stays close to your skin.' },
-            ].map((step) => (
-              <motion.div key={step.title} variants={fadeUp} className="text-center">
-                <span className="text-4xl mb-4 block">{step.emoji}</span>
-                <h3 className="text-lg font-semibold text-melt-text mb-2">{step.title}</h3>
-                <p className="text-sm text-melt-text-muted leading-relaxed max-w-[280px] mx-auto">{step.desc}</p>
+              { 
+                icon: <Zap size={24} className="text-current" />, 
+                title: 'Swipe', 
+                desc: 'Glide the balm across your pulse points — wrists, neck, behind ears.' 
+              },
+              { 
+                icon: <ShieldCheck size={24} className="text-current" />, 
+                title: 'Melt', 
+                desc: 'Your body heat activates the fragrance, creating a scent that is uniquely yours.' 
+              },
+              { 
+                icon: <Star size={24} className="text-current" />, 
+                title: 'Linger', 
+                desc: 'Enjoy a subtle, intimate trail that stays close to your skin for hours.' 
+              },
+            ].map((step, idx) => (
+              <motion.div 
+                key={step.title} 
+                variants={fadeUp} 
+                className="group relative bg-white p-8 rounded-2xl shadow-sm hover:shadow-xl transition-all duration-500 overflow-hidden"
+              >
+                <div className="absolute top-0 right-0 w-32 h-32 bg-melt-bg-alt rounded-bl-[100px] -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
+                <div className="relative z-10">
+                  <div className="w-12 h-12 rounded-xl bg-melt-bg text-melt-accent flex items-center justify-center mb-6 group-hover:bg-melt-accent group-hover:text-white transition-colors duration-300">
+                    {step.icon}
+                  </div>
+                  <span className="text-[10px] font-bold text-melt-accent uppercase tracking-widest mb-2 block">Step 0{idx + 1}</span>
+                  <h3 className="text-xl font-bold text-melt-text mb-3">{step.title}</h3>
+                  <p className="text-sm text-melt-text-muted leading-relaxed">{step.desc}</p>
+                </div>
               </motion.div>
             ))}
+
           </motion.div>
         </div>
       </section>
@@ -139,14 +191,23 @@ export default function HomePage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             {/* Image */}
             <motion.div
-              initial={{ opacity: 0, x: -12 }} whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }} viewport={viewportConfig}
-              className="aspect-4/5 rounded-2xl overflow-hidden bg-linear-to-br from-[#d4c5a9] via-[#e8dcc8] to-[#f0e8d8]"
+              initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "circOut" }} viewport={viewportConfig}
+              className="aspect-4/5 rounded-3xl overflow-hidden bg-[#3d2e1f] relative group"
             >
-              <div className="w-full h-full flex items-center justify-center">
-                <span className="font-serif text-3xl text-melt-text/10 tracking-widest">MELT</span>
+              <Image
+                src="/images/product3.png"
+                alt="MELT Signature Packaging"
+                fill
+                className="object-cover transition-transform duration-1000 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#2a1f14]/60 to-transparent" />
+              <div className="absolute bottom-10 left-10 text-white">
+                <p className="text-[11px] font-bold uppercase tracking-[0.2em] opacity-80 mb-2">Signature Tin</p>
+                <h3 className="text-2xl font-serif italic">Crafted for motion.</h3>
               </div>
             </motion.div>
+
 
             {/* Text */}
             <motion.div
@@ -199,23 +260,43 @@ export default function HomePage() {
           </motion.h2>
 
           {/* Tabs */}
-          <div className="flex flex-wrap justify-center gap-2 mb-10">
+          <div className="flex flex-wrap justify-center gap-3 mb-12">
             {scentFamilies.map((family) => (
               <button
                 key={family}
                 onClick={() => setActiveTab(family)}
-                className={`text-[11px] font-medium uppercase tracking-[0.1em] px-5 py-2 rounded-full border transition-all duration-200 ${
+                className={`text-[12px] font-bold uppercase tracking-[0.15em] px-8 py-3 rounded-full border-2 transition-all duration-300 relative overflow-hidden group ${
                   activeTab === family
-                    ? 'bg-melt-text text-melt-inverse-text border-melt-text'
+                    ? 'bg-melt-text text-white border-melt-text'
                     : 'bg-transparent text-melt-text-muted border-melt-border hover:border-melt-text hover:text-melt-text'
                 }`}
               >
-                {family}
+                <span className="relative z-10">{family}</span>
+                {activeTab === family && (
+                  <motion.div 
+                    layoutId="activeTab"
+                    className="absolute inset-0 bg-melt-text z-0"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
               </button>
             ))}
           </div>
 
-          <ProductGrid products={filteredProducts} />
+          <div className="min-h-[400px] relative">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.4, ease: "easeInOut" }}
+              >
+                <ProductGrid products={filteredProducts} />
+              </motion.div>
+            </AnimatePresence>
+          </div>
+
         </div>
       </section>
 
@@ -243,10 +324,11 @@ export default function HomePage() {
             {[1, 2, 3, 4, 5].map((i) => (
               <motion.div
                 key={i} variants={fadeUp}
-                className="aspect-square rounded-xl overflow-hidden bg-linear-to-br from-melt-bg-alt to-melt-border"
+                className="aspect-square rounded-xl overflow-hidden bg-melt-bg-alt relative group"
               >
-                <div className="w-full h-full flex items-center justify-center">
-                  <span className="text-[10px] text-melt-text-muted/30 uppercase tracking-widest">@wearemelt</span>
+                <Image src={`/images/product${i}.png`} alt={`MELT social proof ${i}`} fill className="object-cover transition-transform duration-700 ease-out group-hover:scale-105" />
+                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center z-10 pointer-events-none">
+                  <span className="text-[10px] text-white font-bold uppercase tracking-widest">@wearemelt</span>
                 </div>
               </motion.div>
             ))}

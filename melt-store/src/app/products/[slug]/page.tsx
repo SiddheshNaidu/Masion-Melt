@@ -4,12 +4,14 @@ import { useState } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Heart, Minus, Plus, Star, Leaf, Plane, Recycle } from 'lucide-react';
+import { Heart, Minus, Plus, Star, Leaf, Plane, Recycle, ShieldCheck, PawPrint } from 'lucide-react';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import Image from 'next/image';
 import { useCart } from '@/context/CartContext';
 import { getProductBySlug, products } from '@/lib/data/products';
 import { reviews } from '@/lib/data/reviews';
 import ProductGrid from '@/components/products/ProductGrid';
+
 
 const sizes = ['5g', '10g', '15g'];
 
@@ -61,32 +63,55 @@ export default function ProductDetailPage() {
       <section className="max-w-[1400px] mx-auto px-6 lg:px-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16">
           {/* Left — Gallery */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }} className="lg:sticky lg:top-24 lg:self-start">
+          <motion.div 
+            initial={{ opacity: 0, x: -20 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 0.6, ease: "easeOut" }} 
+            className="lg:sticky lg:top-24 lg:self-start space-y-4"
+          >
             {/* Main Image */}
-            <div className="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-melt-bg-alt to-melt-border mb-3">
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="text-center">
-                  <span className="font-serif text-4xl text-melt-text/10 tracking-widest block">MELT</span>
-                  <span className="text-sm text-melt-text/15 mt-2 block">{product.name}</span>
-                </div>
+            <div className="aspect-square rounded-3xl overflow-hidden bg-melt-bg-alt relative group cursor-zoom-in">
+              <Image
+                src={product.image}
+                alt={product.name}
+                fill
+                priority
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+              <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div className="absolute bottom-6 right-6 bg-white/80 backdrop-blur-md px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest text-melt-text shadow-sm border border-white/20">
+                Hover to Zoom
               </div>
             </div>
 
             {/* Thumbnails */}
-            <div className="flex gap-2">
-              {[0,1,2,3].map((i) => (
+            <div className="flex gap-4">
+              {[0, 1, 2, 3].map((i) => (
                 <button
                   key={i}
                   onClick={() => setActiveImage(i)}
-                  className={`flex-1 aspect-square rounded-lg overflow-hidden border-2 transition-colors ${
-                    activeImage === i ? 'border-melt-text' : 'border-transparent'
+                  className={`flex-1 aspect-square rounded-2xl overflow-hidden border-2 transition-all duration-300 relative ${
+                    activeImage === i 
+                      ? 'border-melt-accent scale-95 shadow-lg' 
+                      : 'border-transparent hover:border-melt-border'
                   }`}
                 >
-                  <div className="w-full h-full bg-gradient-to-br from-melt-bg-alt to-melt-border" />
+                  <Image
+                    src={product.image}
+                    alt={`${product.name} angle ${i + 1}`}
+                    fill
+                    className={`object-cover ${i === 0 ? '' : 'opacity-40 grayscale'}`}
+                  />
+                  {i !== 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+                      <span className="text-[10px] font-bold text-white uppercase">Angle {i + 1}</span>
+                    </div>
+                  )}
                 </button>
               ))}
             </div>
           </motion.div>
+
 
           {/* Right — Product Info */}
           <motion.div
@@ -106,9 +131,16 @@ export default function ProductDetailPage() {
             </motion.h1>
 
             {/* Scent Family Tag */}
-            <motion.span variants={fadeUp} className="inline-block bg-melt-bg-alt text-melt-text-muted text-[11px] font-medium uppercase tracking-wider px-3 py-1 rounded-full mt-2">
-              {product.scentFamily}
-            </motion.span>
+            <div className="flex items-center gap-3 mt-3">
+              <motion.span variants={fadeUp} className="inline-block bg-melt-bg-alt text-melt-text-muted text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full border border-melt-border">
+                {product.scentFamily}
+              </motion.span>
+              <div className="h-1 w-1 rounded-full bg-melt-accent/40" />
+              <motion.span variants={fadeUp} className="text-[11px] font-bold uppercase tracking-widest text-melt-accent">
+                Medium Intensity
+              </motion.span>
+            </div>
+
 
             {/* Price */}
             <motion.div variants={fadeUp} className="flex items-center gap-3 mt-4">
@@ -129,9 +161,29 @@ export default function ProductDetailPage() {
             </motion.div>
 
             {/* Description */}
-            <motion.p variants={fadeUp} className="text-[15px] text-melt-text-muted leading-relaxed mt-5">
+            <motion.p variants={fadeUp} className="text-[15px] sm:text-[16px] text-melt-text-muted leading-relaxed mt-6 italic font-serif">
+              &quot;A sophisticated, travel-friendly olfactory experience that lingers like a warm memory.&quot;
+            </motion.p>
+            <motion.p variants={fadeUp} className="text-[14px] text-melt-text-muted leading-relaxed mt-4">
               {product.description}
             </motion.p>
+
+            {/* Intensity Bar */}
+            <motion.div variants={fadeUp} className="mt-8 pt-8 border-t border-melt-border">
+              <div className="flex justify-between items-end mb-2">
+                <span className="text-[11px] font-bold uppercase tracking-widest text-melt-text">Fragrance Intensity</span>
+                <span className="text-[11px] font-bold text-melt-accent uppercase tracking-widest">Moderate</span>
+              </div>
+              <div className="h-2 w-full bg-melt-bg-alt rounded-full overflow-hidden">
+                <motion.div 
+                  initial={{ width: 0 }}
+                  whileInView={{ width: '65%' }}
+                  transition={{ duration: 1, ease: "circOut" }}
+                  className="h-full bg-melt-accent"
+                />
+              </div>
+            </motion.div>
+
 
             {/* Scent Notes */}
             <motion.div variants={fadeUp} className="mt-6">
@@ -221,7 +273,7 @@ export default function ProductDetailPage() {
               {[
                 { icon: <Leaf size={16} />, label: 'Clean Ingredients' },
                 { icon: <Plane size={16} />, label: 'TSA-Friendly' },
-                { icon: '🐰', label: 'Cruelty-Free' },
+                { icon: <PawPrint size={16} />, label: 'Cruelty-Free' },
                 { icon: <Recycle size={16} />, label: 'Recyclable Tin' },
               ].map((badge) => (
                 <div key={badge.label} className="flex items-center gap-2 text-[11px] text-melt-text-muted">
@@ -255,6 +307,25 @@ export default function ProductDetailPage() {
           </motion.div>
         </div>
       </section>
+
+      {/* Mobile Floating Bar */}
+      <motion.div 
+        initial={{ y: 100 }}
+        animate={{ y: 0 }}
+        className="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-melt-border p-4 z-50 lg:hidden flex items-center justify-between gap-4"
+      >
+        <div className="flex flex-col">
+          <span className="text-[10px] font-bold text-melt-text-muted uppercase tracking-widest">{product.name}</span>
+          <span className="text-lg font-bold text-melt-text">₹{product.price}</span>
+        </div>
+        <button
+          onClick={() => addItem(product, selectedSize)}
+          className="flex-1 bg-melt-text text-white text-[12px] font-bold uppercase tracking-widest py-4 rounded-xl shadow-2xl active:scale-95 transition-transform"
+        >
+          Add to Bag
+        </button>
+      </motion.div>
+
 
       {/* Reviews */}
       <section className="max-w-[1400px] mx-auto px-6 lg:px-10 py-20 lg:py-24">

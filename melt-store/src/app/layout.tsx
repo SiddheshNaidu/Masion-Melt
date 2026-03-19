@@ -6,8 +6,12 @@ import AnnouncementBar from '@/components/layout/AnnouncementBar';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/layout/CartDrawer';
+import LoadingSplashScreen from '@/components/ui/LoadingSplashScreen';
+import ToastNotification from '@/components/ui/toast-notification';
+
 
 const playfair = Playfair_Display({
+
   subsets: ['latin'],
   variable: '--font-playfair',
   display: 'swap',
@@ -42,13 +46,17 @@ export default function RootLayout({
     <html lang="en" className={`${playfair.variable} ${dmSans.variable}`}>
       <body className="antialiased">
         <CartProvider>
+          <LoadingSplashScreen />
           <AnnouncementBar />
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />
           <CartDrawer />
+          <ToastNotification />
         </CartProvider>
+
       </body>
+
     </html>
   );
 }

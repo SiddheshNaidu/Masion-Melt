@@ -1,10 +1,13 @@
 'use client';
 
-import Image from 'next/image';
+
 import { Minus, Plus, X } from 'lucide-react';
 import { useCart } from '@/context/CartContext';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import Link from 'next/link';
+import ProductTinPlaceholder from '@/components/products/ProductTinPlaceholder';
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 export default function CartDrawer() {
   const { items, isOpen, setCartOpen, removeItem, updateQuantity, totalItems, subtotal } = useCart();
@@ -33,13 +36,22 @@ export default function CartDrawer() {
               </Link>
             </div>
           ) : (
-            <ul className="space-y-5">
-              {items.map((item) => (
-                <li key={`${item.product.id}-${item.selectedSize}`} className="flex gap-4">
-                  {/* Thumbnail */}
-                  <div className="relative w-20 h-20 rounded-lg overflow-hidden bg-melt-bg-alt flex-shrink-0">
-                    <div className="w-full h-full bg-gradient-to-br from-melt-bg-alt to-melt-border" />
-                  </div>
+            <ul className="space-y-6">
+              <AnimatePresence mode="popLayout">
+                {items.map((item) => (
+                  <motion.li 
+                    key={`${item.product.id}-${item.selectedSize}`} 
+                    layout
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: 20, height: 0, marginBottom: 0 }}
+                    className="flex gap-4"
+                  >
+                    {/* Thumbnail */}
+                    <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-melt-bg-alt flex-shrink-0 border border-melt-border">
+                      <ProductTinPlaceholder name={item.product.name} family={item.product.scentFamily} size="sm" />
+                    </div>
+
 
                   {/* Info */}
                   <div className="flex-1 min-w-0">
@@ -78,29 +90,53 @@ export default function CartDrawer() {
                       </div>
                       <p className="text-sm font-semibold text-melt-text">₹{item.product.price * item.quantity}</p>
                     </div>
-                  </div>
-                </li>
-              ))}
+                    </div>
+                  </motion.li>
+                ))}
+              </AnimatePresence>
             </ul>
+
+
           )}
         </div>
 
         {/* Subtotal & Checkout */}
         {items.length > 0 && (
-          <div className="border-t border-melt-border px-6 py-5 space-y-4">
-            {subtotal < 999 && (
-              <p className="text-[11px] text-melt-text-muted text-center">
-                Add ₹{999 - subtotal} more for free shipping
-              </p>
-            )}
-            <div className="flex items-center justify-between">
-              <span className="text-sm font-medium text-melt-text">Subtotal</span>
-              <span className="text-lg font-semibold text-melt-text">₹{subtotal}</span>
+          <div className="border-t border-melt-border px-6 py-6 space-y-5 bg-white">
+            <div className="space-y-2">
+              <div className="flex justify-between text-[11px] uppercase tracking-wider font-semibold">
+                <span className="text-melt-text">Free Shipping Progress</span>
+                <span className="text-melt-accent">{subtotal >= 999 ? 'UNLOCKED' : `₹${999 - subtotal} left`}</span>
+              </div>
+              <div className="w-full bg-melt-bg-alt rounded-full h-1.5 overflow-hidden">
+                <motion.div 
+                  className="bg-melt-accent h-full rounded-full"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${Math.min((subtotal / 999) * 100, 100)}%` }}
+                  transition={{ duration: 0.8, ease: "circOut" }}
+                />
+              </div>
+              {subtotal < 999 && (
+                <p className="text-[11px] text-melt-text-muted italic">
+                  Spend ₹999 for free shipping.
+                </p>
+              )}
             </div>
-            <button className="w-full bg-melt-text text-melt-inverse-text text-[13px] font-medium uppercase tracking-[0.08em] py-4 rounded-lg hover:bg-melt-accent hover:text-melt-text transition-colors duration-200 active:animate-micro-bounce">
-              Checkout
-            </button>
+
+            <div className="flex items-center justify-between pt-2">
+              <span className="text-[13px] uppercase tracking-widest font-medium text-melt-text">Subtotal</span>
+              <span className="text-lg font-bold text-melt-text">₹{subtotal}</span>
+            </div>
+
+            <Link 
+              href="/checkout"
+              onClick={() => setCartOpen(false)}
+              className="w-full bg-melt-text text-white text-[12px] font-semibold uppercase tracking-[0.15em] py-4 rounded-xl hover:bg-melt-accent transition-all duration-300 active:scale-[0.98] flex items-center justify-center gap-2"
+            >
+              Secure Checkout
+            </Link>
           </div>
+
         )}
       </SheetContent>
     </Sheet>

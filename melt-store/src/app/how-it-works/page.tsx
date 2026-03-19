@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Fingerprint, Thermometer, Sparkles } from 'lucide-react';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 12, willChange: 'transform, opacity' as const },
@@ -92,7 +93,9 @@ export default function HowItWorksPage() {
                 className={`aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-br from-melt-bg-alt to-melt-border ${i % 2 === 1 ? 'lg:order-2' : ''}`}
               >
                 <div className="w-full h-full flex items-center justify-center">
-                  <span className="text-6xl">{['🫰', '🌡️', '✨'][i]}</span>
+                  {i === 0 && <Fingerprint size={64} className="text-melt-accent opacity-60" />}
+                  {i === 1 && <Thermometer size={64} className="text-melt-accent opacity-60" />}
+                  {i === 2 && <Sparkles size={64} className="text-melt-accent opacity-60" />}
                 </div>
               </motion.div>
 
@@ -102,7 +105,7 @@ export default function HowItWorksPage() {
                 variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
                 className={i % 2 === 1 ? 'lg:order-1' : ''}
               >
-                <motion.span variants={fadeUp} className="text-[64px] lg:text-[80px] font-bold text-melt-border/60 leading-none block mb-2">
+                <motion.span variants={fadeUp} className="text-[64px] lg:text-[80px] font-bold text-melt-text/15 leading-none block mb-2">
                   {step.number}
                 </motion.span>
                 <motion.h2 variants={fadeUp} className="text-[clamp(28px,4vw,44px)] font-semibold text-melt-text mb-4">

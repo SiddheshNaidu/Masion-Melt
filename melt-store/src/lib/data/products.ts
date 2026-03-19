@@ -12,12 +12,8 @@ export const products: Product[] = [
     heartNotes: ['Cedarwood', 'Fern', 'Wild Sage'],
     baseNotes: ['Vetiver', 'Oakmoss', 'Musk'],
     price: 399,
-    images: [
-      '/images/forest-whisper-1.jpg',
-      '/images/forest-whisper-2.jpg',
-      '/images/forest-whisper-3.jpg',
-      '/images/forest-whisper-4.jpg',
-    ],
+    images: ['/images/product1.png'],
+    image: '/images/product1.png',
     badge: 'BESTSELLER',
     size: '5g',
     ingredients: 'Beeswax, Fractionated Coconut Oil, Shea Butter, Vitamin E, Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
@@ -34,12 +30,8 @@ export const products: Product[] = [
     heartNotes: ['Madagascar Vanilla', 'Jasmine Sambac', 'Tonka Bean'],
     baseNotes: ['Amber', 'Sandalwood', 'Caramel Musk'],
     price: 399,
-    images: [
-      '/images/vanilla-veil-1.jpg',
-      '/images/vanilla-veil-2.jpg',
-      '/images/vanilla-veil-3.jpg',
-      '/images/vanilla-veil-4.jpg',
-    ],
+    images: ['/images/product2.png'],
+    image: '/images/product2.png',
     badge: 'BESTSELLER',
     size: '5g',
     ingredients: 'Beeswax, Fractionated Coconut Oil, Shea Butter, Vitamin E, Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
@@ -57,12 +49,8 @@ export const products: Product[] = [
     baseNotes: ['Smoky Incense', 'Leather', 'Dark Amber'],
     price: 799,
     comparePrice: 999,
-    images: [
-      '/images/black-muse-1.jpg',
-      '/images/black-muse-2.jpg',
-      '/images/black-muse-3.jpg',
-      '/images/black-muse-4.jpg',
-    ],
+    images: ['/images/product3.png'],
+    image: '/images/product3.png',
     badge: 'LIMITED',
     size: '10g',
     ingredients: 'Carnauba Wax, Fractionated Coconut Oil, Jojoba Oil, Vitamin E, Premium Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
@@ -78,13 +66,9 @@ export const products: Product[] = [
     topNotes: ['Sea Salt', 'Lemon Zest', 'Eucalyptus'],
     heartNotes: ['White Tea', 'Water Lily', 'Blue Lotus'],
     baseNotes: ['Driftwood', 'White Musk', 'Ambergris'],
-    price: 449,
-    images: [
-      '/images/tidal-mist-1.jpg',
-      '/images/tidal-mist-2.jpg',
-      '/images/tidal-mist-3.jpg',
-      '/images/tidal-mist-4.jpg',
-    ],
+    price: 399,
+    images: ['/images/product4.png'],
+    image: '/images/product4.png',
     badge: 'NEW',
     size: '8g',
     ingredients: 'Beeswax, Fractionated Coconut Oil, Shea Butter, Vitamin E, Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
@@ -101,12 +85,9 @@ export const products: Product[] = [
     heartNotes: ['Peony', 'White Gardenia', 'Lily of the Valley'],
     baseNotes: ['White Cedar', 'Soft Musk', 'Powdered Iris'],
     price: 349,
-    images: [
-      '/images/blossom-aura-1.jpg',
-      '/images/blossom-aura-2.jpg',
-      '/images/blossom-aura-3.jpg',
-      '/images/blossom-aura-4.jpg',
-    ],
+    images: ['/images/product5.png'],
+    image: '/images/product5.png',
+
     size: '5g',
     ingredients: 'Beeswax, Fractionated Coconut Oil, Shea Butter, Vitamin E, Fragrance Oils (Phthalate-Free). Dermatologically tested. Free from parabens, sulfates, and synthetic dyes.',
     howToUse: 'Warm the balm with your fingertip for 2–3 seconds. Glide across pulse points — wrists, behind ears, neck, and inner elbows. Your body heat will melt the fragrance and release it slowly throughout the day. Reapply as desired.',
@@ -119,5 +100,5 @@ export function getProductBySlug(slug: string): Product | undefined {
 
 export function getProductsByFamily(family: string): Product[] {
   if (family === 'ALL') return products;
-  return products.filter((p) => p.scentFamily === family);
+  return products.filter((p) => p.scentFamily.toLowerCase() === family.toLowerCase());
 }

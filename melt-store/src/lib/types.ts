@@ -20,6 +20,7 @@ export interface Product {
   price: number;
   comparePrice?: number;
   images: string[];
+  image: string; // Default primary image
   badge?: "BESTSELLER" | "NEW" | "LIMITED";
   size: string;
   ingredients: string;

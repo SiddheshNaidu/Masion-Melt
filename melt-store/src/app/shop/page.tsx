@@ -22,8 +22,12 @@ export default function ShopPage() {
   const [activeFilter, setActiveFilter] = useState<string>('ALL');
   const [sortBy, setSortBy] = useState<string>('Featured');
 
-  const filtered = getProductsByFamily(activeFilter);
+  const filtered = activeFilter === 'ALL' ? products : getProductsByFamily(activeFilter);
+  const featuredTitle = activeFilter === 'ALL' ? 'All Scents' : `${activeFilter} Collection`;
+  
   const sorted = [...filtered].sort((a, b) => {
+
+
     if (sortBy === 'Price: Low to High') return a.price - b.price;
     if (sortBy === 'Price: High to Low') return b.price - a.price;
     return 0;
@@ -33,47 +37,70 @@ export default function ShopPage() {
     <div className="pb-20 lg:pb-24">
       {/* Header */}
       <section className="py-16 lg:py-20 text-center">
-        <motion.div initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.1 } } }}>
-          <motion.h1 variants={fadeUp} className="font-serif text-[clamp(40px,6vw,64px)] font-bold text-melt-text">
-            All Scents
+        <motion.div 
+          initial="hidden" 
+          animate="visible" 
+          variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+          className="relative z-10"
+        >
+          <motion.h1 variants={fadeUp} className="font-serif text-[clamp(48px,8vw,80px)] font-bold text-melt-text tracking-tight">
+            {featuredTitle}
           </motion.h1>
-          <motion.p variants={fadeUp} className="text-sm text-melt-text-muted mt-3 max-w-md mx-auto">
-            Solid perfumes for every mood, made to live in your pocket.
+          <motion.p variants={fadeUp} className="text-[15px] text-melt-text-muted mt-5 max-w-md mx-auto leading-relaxed">
+            Pocket-sized solid perfumes for every mood, made to live in your pocket and linger on your skin.
           </motion.p>
+          <motion.div variants={fadeUp} className="mt-8 flex justify-center">
+            <div className="h-px w-12 bg-melt-accent/30" />
+          </motion.div>
         </motion.div>
+
       </section>
 
       {/* Filters & Sort */}
       <section className="max-w-[1400px] mx-auto px-6 lg:px-10 mb-10">
-        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          {/* Filter pills */}
-          <div className="flex flex-wrap gap-2 overflow-x-auto pb-1">
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`text-[11px] font-medium uppercase tracking-[0.1em] px-4 py-2 rounded-full border transition-all duration-200 whitespace-nowrap ${
-                  activeFilter === filter
-                    ? 'bg-melt-text text-melt-inverse-text border-melt-text'
-                    : 'bg-transparent text-melt-text-muted border-melt-border hover:border-melt-text hover:text-melt-text'
-                }`}
-              >
-                {filter}
-              </button>
-            ))}
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-melt-border pb-8">
+          <div className="flex flex-col gap-4 w-full md:w-auto">
+            <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-melt-text-muted">Filter by family</span>
+            <div className="flex flex-wrap gap-2 overflow-x-auto pb-1 no-scrollbar">
+              {filters.map((filter) => (
+                <button
+                  key={filter}
+                  onClick={() => setActiveFilter(filter)}
+                  className={`text-[11px] font-bold uppercase tracking-widest px-6 py-2.5 rounded-full border-2 transition-all duration-300 whitespace-nowrap ${
+                    activeFilter === filter
+                      ? 'bg-melt-text text-white border-melt-text shadow-lg'
+                      : 'bg-transparent text-melt-text-muted border-melt-border hover:border-melt-text hover:text-melt-text'
+                  }`}
+                >
+                  {filter}
+                </button>
+              ))}
+            </div>
           </div>
 
-          {/* Sort */}
-          <select
-            value={sortBy}
-            onChange={(e) => setSortBy(e.target.value)}
-            className="text-[12px] text-melt-text-muted bg-transparent border border-melt-border rounded-lg px-4 py-2 outline-none focus:border-melt-text transition-colors cursor-pointer"
-          >
-            {sortOptions.map((option) => (
-              <option key={option} value={option}>{option}</option>
-            ))}
-          </select>
+          <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end border-t md:border-t-0 pt-6 md:pt-0 border-melt-border">
+            <div className="flex flex-col gap-1">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-melt-text-muted">Sort by</span>
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="text-[12px] font-bold text-melt-text bg-transparent outline-none cursor-pointer hover:text-melt-accent transition-colors py-1"
+              >
+                {sortOptions.map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
+            
+            <div className="h-10 w-px bg-melt-border hidden md:block" />
+            
+            <div className="text-right">
+              <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-melt-text-muted">Count</span>
+              <p className="text-[14px] font-bold text-melt-text">{sorted.length} Scents</p>
+            </div>
+          </div>
         </div>
+
       </section>
 
       {/* Product Grid */}

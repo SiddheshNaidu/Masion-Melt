@@ -6,6 +6,7 @@ import type { CartItem, Product } from '@/lib/types';
 interface CartState {
   items: CartItem[];
   isOpen: boolean;
+  lastAdded: Product | null;
 }
 
 type CartAction =
@@ -14,16 +15,19 @@ type CartAction =
   | { type: 'UPDATE_QUANTITY'; productId: string; selectedSize: string; quantity: number }
   | { type: 'CLEAR_CART' }
   | { type: 'SET_OPEN'; isOpen: boolean }
+  | { type: 'SET_LAST_ADDED'; product: Product | null }
   | { type: 'LOAD_CART'; items: CartItem[] };
 
 interface CartContextType {
   items: CartItem[];
   isOpen: boolean;
+  lastAdded: Product | null;
   addItem: (product: Product, selectedSize: string) => void;
   removeItem: (productId: string, selectedSize: string) => void;
   updateQuantity: (productId: string, selectedSize: string, quantity: number) => void;
   clearCart: () => void;
   setCartOpen: (isOpen: boolean) => void;
+  setLastAdded: (product: Product | null) => void;
   totalItems: number;
   subtotal: number;
 }
@@ -42,12 +46,12 @@ function cartReducer(state: CartState, action: CartAction): CartState {
           ...newItems[existingIndex],
           quantity: newItems[existingIndex].quantity + 1,
         };
-        return { ...state, items: newItems, isOpen: true };
+        return { ...state, items: newItems, lastAdded: action.product };
       }
       return {
         ...state,
         items: [...state.items, { product: action.product, quantity: 1, selectedSize: action.selectedSize }],
-        isOpen: true,
+        lastAdded: action.product,
       };
     }
     case 'REMOVE_ITEM':
@@ -77,6 +81,8 @@ function cartReducer(state: CartState, action: CartAction): CartState {
       return { ...state, items: [] };
     case 'SET_OPEN':
       return { ...state, isOpen: action.isOpen };
+    case 'SET_LAST_ADDED':
+      return { ...state, lastAdded: action.product };
     case 'LOAD_CART':
       return { ...state, items: action.items };
     default:
@@ -85,7 +91,7 @@ function cartReducer(state: CartState, action: CartAction): CartState {
 }
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(cartReducer, { items: [], isOpen: false });
+  const [state, dispatch] = useReducer(cartReducer, { items: [], isOpen: false, lastAdded: null });
 
   useEffect(() => {
     try {
@@ -116,18 +122,32 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = useCallback(() => dispatch({ type: 'CLEAR_CART' }), []);
   const setCartOpen = useCallback((isOpen: boolean) => dispatch({ type: 'SET_OPEN', isOpen }), []);
+  const setLastAdded = useCallback((product: Product | null) => dispatch({ type: 'SET_LAST_ADDED', product }), []);
 
   const totalItems = state.items.reduce((sum, item) => sum + item.quantity, 0);
   const subtotal = state.items.reduce((sum, item) => sum + item.product.price * item.quantity, 0);
 
   return (
     <CartContext.Provider
-      value={{ items: state.items, isOpen: state.isOpen, addItem, removeItem, updateQuantity, clearCart, setCartOpen, totalItems, subtotal }}
+      value={{ 
+        items: state.items, 
+        isOpen: state.isOpen, 
+        lastAdded: state.lastAdded,
+        addItem, 
+        removeItem, 
+        updateQuantity, 
+        clearCart, 
+        setCartOpen, 
+        setLastAdded,
+        totalItems, 
+        subtotal 
+      }}
     >
       {children}
     </CartContext.Provider>
   );
 }
+
 
 export function useCart(): CartContextType {
   const context = useContext(CartContext);

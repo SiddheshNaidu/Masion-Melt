@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import Image from 'next/image';
 import { Leaf, Plane, Recycle } from 'lucide-react';
 
 const fadeUp = {
@@ -37,11 +38,9 @@ export default function OurStoryPage() {
             <motion.div
               initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }} viewport={{ once: true }}
-              className="aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-br from-[#d4c5a9] via-[#e8dcc8] to-[#f0e8d8]"
+              className="aspect-[4/5] rounded-2xl overflow-hidden bg-[#e8dcc8] relative"
             >
-              <div className="w-full h-full flex items-center justify-center">
-                <span className="font-serif text-3xl text-melt-text/10 tracking-widest">MELT</span>
-              </div>
+              <Image src="/images/product1.png" alt="The Beginning - Broken Bottle" fill className="object-cover" />
             </motion.div>
 
             <motion.div
@@ -101,11 +100,9 @@ export default function OurStoryPage() {
             <motion.div
               initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6 }} viewport={{ once: true }}
-              className="order-1 lg:order-2 aspect-[4/5] rounded-2xl overflow-hidden bg-gradient-to-tl from-[#d4c5a9] via-[#e8dcc8] to-[#f0e8d8]"
+              className="order-1 lg:order-2 aspect-[4/5] rounded-2xl overflow-hidden bg-[#e8dcc8] relative"
             >
-              <div className="w-full h-full flex items-center justify-center">
-                <span className="font-serif text-3xl text-melt-text/10 tracking-widest">MELT</span>
-              </div>
+              <Image src="/images/product2.png" alt="The Solid Format" fill className="object-cover" />
             </motion.div>
           </div>
         </div>
