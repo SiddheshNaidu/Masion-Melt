@@ -1,0 +1,13 @@
+﻿
+C:\Users\Siddhesh\Documents\Masion-Melt\melt-store\src\app\order-confirmation\page.tsx
+  21:9  error  'timeoutId' is never reassigned. Use 'const' instead  prefer-const
+
+C:\Users\Siddhesh\Documents\Masion-Melt\melt-store\src\app\products\[slug]\page.tsx
+  7:58  warning  'ShieldCheck' is defined but never used  @typescript-eslint/no-unused-vars
+
+C:\Users\Siddhesh\Documents\Masion-Melt\melt-store\src\components\layout\AnnouncementBar.tsx
+  10:9  error  'timeoutId' is never reassigned. Use 'const' instead  prefer-const
+
+Γ£û 3 problems (2 errors, 1 warning)
+  2 errors and 0 warnings potentially fixable with the `--fix` option.
+

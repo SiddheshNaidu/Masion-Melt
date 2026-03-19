@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { Playfair_Display, DM_Sans } from 'next/font/google';
 import './globals.css';
 import { CartProvider } from '@/context/CartContext';
-import AnnouncementBar from '@/components/layout/AnnouncementBar';
 import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import CartDrawer from '@/components/layout/CartDrawer';
@@ -47,7 +46,6 @@ export default function RootLayout({
       <body className="antialiased">
         <CartProvider>
           <LoadingSplashScreen />
-          <AnnouncementBar />
           <Navbar />
           <main className="min-h-screen">{children}</main>
           <Footer />
